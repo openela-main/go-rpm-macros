@@ -7,7 +7,8 @@ Version:   3.2.0
 %global _docdir_fmt     %{name}
 
 # Master definition that will be written to macro files
-%global golang_arches   %{ix86} x86_64 %{arm} aarch64 ppc64le s390x
+%global golang_arches_future x86_64 %{arm} aarch64 ppc64le s390x
+%global golang_arches   %{ix86} %{golang_arches_future}
 %global gccgo_arches    %{mips}
 %if 0%{?rhel} >= 9
 %global golang_arches   x86_64 aarch64 ppc64le s390x
@@ -35,7 +36,7 @@ Version:   3.2.0
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   1%{?dist}
+Release:   2%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -126,7 +127,7 @@ macros provided by go-rpm-macros to create Go packages.
 
 %patch0 -p1
 
-%writevars -f rpm/macros.d/macros.go-srpm golang_arches gccgo_arches gopath
+%writevars -f rpm/macros.d/macros.go-srpm golang_arches golang_arches_future gccgo_arches gopath
 for template in templates/rpm/*\.spec ; do
   target=$(echo "${template}" | sed "s|^\(.*\)\.spec$|\1-bare.spec|g")
   grep -v '^#' "${template}" > "${target}"
@@ -250,6 +251,10 @@ sed -i "s,golist,%{golist_execdir}/golist,g" %{buildroot}%{_bindir}/go-rpm-integ
 %{_spectemplatedir}/*.spec
 
 %changelog
+* Fri Jul 28 2023 Alejandro Sáez <asm@redhat.com> - 3.2.0-2
+- Add golang_arches_future
+- Resolves: rhbz#2227224
+
 * Wed Nov 23 2022 Alejandro Sáez <asm@redhat.com> - 3.2.0-1
 - Update to 3.2.0
 - Add add-gobuild-and-gotest.patch
