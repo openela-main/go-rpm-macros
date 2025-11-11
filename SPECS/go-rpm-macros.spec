@@ -37,7 +37,7 @@ Version:   3.6.0
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   10%{?dist}
+Release:   11%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -263,10 +263,24 @@ sed -i "s,golist ,%{golist_execdir}/golist ,g" \
 %{_rpmluadir}/fedora/srpm/*.lua
 
 %changelog
+* Tue Apr 15 2025 Alejandro Sáez <asm@redhat.com> - 3.6.0-11
+- Bump release for el9 to avoid clash with el9_6 build
+- Related: RHEL-86067
+- Related: RHEL-7366
+
 * Fri Apr 11 2025 Alejandro Sáez <asm@redhat.com> - 3.6.0-10
+- Fix malformed patch macros
+- Related: RHEL-86067
+- Related: RHEL-7366
+
+* Fri Apr 04 2025 Alejandro Sáez <asm@redhat.com> - 3.6.0-9
+- Add patches back again
+- Resolves: RHEL-86067
+- Related: RHEL-7366
+
+* Thu Apr 03 2025 Alejandro Sáez <asm@redhat.com> - 3.6.0-8
 - Add full golist implementation
-- Resolves: RHEL-86879
-- Resolves: RHEL-86880
+- Resolves: RHEL-7366
 
 * Wed Nov 13 2024 Alejandro Sáez <asm@redhat.com>
 - Revert go-rpm-templates to noarch
