@@ -37,7 +37,7 @@ Version:   3.6.0
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   13%{?dist}
+Release:   14%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
@@ -263,6 +263,10 @@ sed -i "s,golist ,%{golist_execdir}/golist ,g" \
 %{_rpmluadir}/fedora/srpm/*.lua
 
 %changelog
+* Fri Apr 17 2026 Alejandro Sáez <asm@redhat.com> - 3.6.0-14
+- Rebuild with latest Go
+- Resolves: RHEL-158726
+
 * Tue Mar 03 2026 dbenoit <dbenoit@redhat.com> - 3.6.0-13
 - Rebuild with latest Go
 - Resolves: RHEL-146862
