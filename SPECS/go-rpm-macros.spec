@@ -1,6 +1,5 @@
-%global forgeurl  https://pagure.io/go-rpm-macros
-Version:   3.6.0
-%forgemeta
+%global forgeurl  https://gitlab.com/fedora/sigs/go/go-rpm-macros
+Version:   3.8.1
 
 #https://src.fedoraproject.org/rpms/redhat-rpm-config/pull-request/51
 %global _spectemplatedir %{_datadir}/rpmdevtools/fedora
@@ -37,12 +36,12 @@ Version:   3.6.0
 ExclusiveArch: %{golang_arches} %{gccgo_arches}
 
 Name:      go-rpm-macros
-Release:   14%{?dist}
+Release:   1%{?dist}
 Summary:   Build-stage rpm automation for Go packages
 
 License:   GPLv3+
 URL:       %{forgeurl}
-Source0:   %{forgesource}
+Source0:  %{forgeurl}/-/archive/%{version}/go-rpm-macros-%{version}.tar.bz2
 %if 0%{?bundle_golist}
 Source1:   https://pagure.io/golist/archive/v%{golist_version}/golist-%{golist_version}.tar.gz
 # vendored dependency tarball, to create:
@@ -132,7 +131,7 @@ This package contains documented rpm spec templates showcasing how to use the
 macros provided by go-rpm-macros to create Go packages.
 
 %prep
-%forgesetup
+%autosetup -N
 
 %writevars -f rpm/macros.d/macros.go-srpm golang_arches golang_arches_future gccgo_arches gopath
 for template in templates/rpm/*\.spec ; do
@@ -263,17 +262,10 @@ sed -i "s,golist ,%{golist_execdir}/golist ,g" \
 %{_rpmluadir}/fedora/srpm/*.lua
 
 %changelog
-* Fri Apr 17 2026 Alejandro Sáez <asm@redhat.com> - 3.6.0-14
-- Rebuild with latest Go
-- Resolves: RHEL-158726
-
-* Tue Mar 03 2026 dbenoit <dbenoit@redhat.com> - 3.6.0-13
-- Rebuild with latest Go
-- Resolves: RHEL-146862
-
-* Thu Nov 20 2025 Archana <aravinda@redhat.com> - 3.6.0-12
-- Rebuilt to include Go1.25.3 to address CVE-2025-47906
-- Resolves: RHEL-125569
+* Wed Oct 01 2025 Alejandro Sáez <asm@redhat.com> - 3.8.1-1
+- Update to 3.8.1
+- Changed the forgeurl to gitlab
+- Resolves: RHEL-112845
 
 * Tue Apr 15 2025 Alejandro Sáez <asm@redhat.com> - 3.6.0-11
 - Bump release for el9 to avoid clash with el9_6 build
